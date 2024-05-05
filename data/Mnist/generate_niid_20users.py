@@ -1,14 +1,19 @@
-from sklearn.datasets import fetch_openml
-from tqdm import trange
-import numpy as np
-import random
-import json
-import os
+# Import necessary libraries
+from sklearn.datasets import fetch_openml  # Import MNIST dataset
+from tqdm import trange  # Progress bar
+import numpy as np  # Numerical operations
+import random  # Random number generation
+import json  # JSON serialization/deserialization
+import os  # Operating system operations
 
+# Set random seeds for reproducibility
 random.seed(1)
 np.random.seed(1)
-NUM_USERS = 20 # should be muitiple of 10
-NUM_LABELS = 2
+
+# Define the number of users and labels
+NUM_USERS = 20  # Should be multiple of 10
+NUM_LABELS = 2  # num of labels each user will get
+
 # Setup directory for train/test data
 train_path = './data/train/mnist_train.json'
 test_path = './data/test/mnist_test.json'
@@ -24,30 +29,36 @@ mnist = fetch_openml('mnist_784', data_home='./data')
 mu = np.mean(mnist.data.astype(np.float32), 0)
 sigma = np.std(mnist.data.astype(np.float32), 0)
 mnist.data = (mnist.data.astype(np.float32) - mu)/(sigma+0.001)
+
 mnist_data = []
 for i in trange(10):
-    idx = mnist.target==str(i)
-    mnist_data.append(mnist.data[idx])
+    idx = mnist.target==str(i) # a boolean array indicating which MNIST data corresponds to the current label i
+    mnist_data.append(mnist.data[idx]) # Adds data corresponding to label i to mnist_data
+    print("\nNumber of samples for label", i, ":", np.sum(idx))  # Prints the number of samples for each label
 
-print("\nNumb samples of each label:\n", [len(v) for v in mnist_data])
-users_lables = []
+# commented those cause I don't know their utility here
+# print("\nNumb samples of each label:\n", [len(v) for v in mnist_data])
+# print("idx",idx)
 
-print("idx",idx)
-# devide for label for each users:
+users_labels = []
+
+# the labels will be distributed in a cyclic manner such that each user gets a unique combination of 2 labels.
+# The users_labels list will contain all the assigned labels
 for user in trange(NUM_USERS):
-    for j in range(NUM_LABELS):  # 4 labels for each users
+    for j in range(NUM_LABELS):
         l = (user * NUM_USERS + j) % 10
-        users_lables.append(l)
-print(f"user_labels = {users_lables}")
-unique, counts = np.unique(users_lables, return_counts=True)
-print("42--------------")
-print(f"line 43: unique= {unique}, counts={counts}")
+        users_labels.append(l)
 
+print(f"user_labels = {users_labels}")
+unique, counts = np.unique(users_labels, return_counts=True)
+print("42--------------")
+print(f"unique= {unique}, counts={counts}")
+
+# Function to generate random numbers for label distribution
 def ram_dom_gen(total, size):
     print(total, size)
-    nums = []
     temp = []
-    for i in range(size - 1):
+    for _ in range(size - 1):
         val = np.random.randint(total//(size + 1), total//2)
         #val = 100
         temp.append(val)
@@ -56,6 +67,7 @@ def ram_dom_gen(total, size):
     print(temp)
     return temp
 
+# Generate random number of samples for each label and user
 number_sample = []
 for total_value, count in zip(mnist_data, counts):
     print(f"total_value= {total_value}, count= {count}")
@@ -64,6 +76,7 @@ for total_value, count in zip(mnist_data, counts):
 print("--------------")
 print(f"number_sample= {number_sample}")
 
+# Arrange generated samples for each label and user
 i = 0
 number_samples = []
 for i in range(len(number_sample[0])):
@@ -120,7 +133,8 @@ for i in range(NUM_USERS):
 
 print("Num_samples:", train_data['num_samples'])
 print("Total_samples:",sum(train_data['num_samples'] + test_data['num_samples']))
-    
+
+# Save generated samples
 with open(train_path,'w') as outfile:
     json.dump(train_data, outfile)
 with open(test_path, 'w') as outfile:
