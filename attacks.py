@@ -50,7 +50,7 @@ def main(dataset, algorithm, model, batch_size, learning_rate, beta, lamda, num_
             num_malicious_clients = int(numusers * malicious_clients_percentage)
             malicious_clients = random.sample(server.users, num_malicious_clients)
             for client in malicious_clients:
-                client.__class__ = AttackerGradientReversionAVG()
+                client.__class__ = AttackerGradientReversionAVG
         
         if(algorithm == "pFedMe"):
             server = pFedMe(device, dataset, algorithm, model, batch_size, learning_rate, beta, lamda, num_glob_iters, local_epochs, optimizer, numusers, K, personal_learning_rate, i)
