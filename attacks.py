@@ -21,7 +21,7 @@ def main(dataset, algorithm, model, batch_size, learning_rate, beta, lamda, num_
     # Get device status: Check GPU or CPU
     device = torch.device("cuda:{}".format(gpu) if torch.cuda.is_available() and gpu != -1 else "cpu")
 
-    malicious_clients_percentage = 1
+    malicious_clients_percentage = 0.5
 
     for i in range(times):
         print("---------------Running time:------------",i)
