@@ -1,5 +1,5 @@
 # Import necessary libraries
-from sklearn.datasets import fetch_openml  # Import MNIST dataset
+from sklearn.datasets import fetch_openml
 from tqdm import trange  # Progress bar
 import numpy as np  # Numerical operations
 import random  # Random number generation
