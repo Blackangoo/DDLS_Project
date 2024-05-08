@@ -9,6 +9,7 @@ import os
 from FLAlgorithms.servers.serveravg import FedAvg
 from FLAlgorithms.servers.serverpFedMe import pFedMe
 from FLAlgorithms.servers.serverperavg import PerAvg
+from FLAlgorithms.users.useravg import AttackerGradientReversionAVG
 from FLAlgorithms.trainmodel.models import *
 from utils.plot_utils import *
 import torch
@@ -19,6 +20,8 @@ def main(dataset, algorithm, model, batch_size, learning_rate, beta, lamda, num_
 
     # Get device status: Check GPU or CPU
     device = torch.device("cuda:{}".format(gpu) if torch.cuda.is_available() and gpu != -1 else "cpu")
+
+    malicious_clients_percentage = 10
 
     for i in range(times):
         print("---------------Running time:------------",i)
@@ -44,6 +47,10 @@ def main(dataset, algorithm, model, batch_size, learning_rate, beta, lamda, num_
         # select algorithm
         if(algorithm == "FedAvg"):
             server = FedAvg(device, dataset, algorithm, model, batch_size, learning_rate, beta, lamda, num_glob_iters, local_epochs, optimizer, numusers, i)
+            num_malicious_clients = int(numusers * malicious_clients_percentage)
+            malicious_clients = random.sample(server.users, num_malicious_clients)
+            for client in malicious_clients:
+                client.__class__ = AttackerGradientReversionAVG
         
         if(algorithm == "pFedMe"):
             server = pFedMe(device, dataset, algorithm, model, batch_size, learning_rate, beta, lamda, num_glob_iters, local_epochs, optimizer, numusers, K, personal_learning_rate, i)
