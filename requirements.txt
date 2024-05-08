@@ -9,3 +9,4 @@ jupyterlab
 h5py
 pandas
 scikit-learn
+typing

@@ -111,7 +111,7 @@ print("IDX2:", idx) # counting samples for each labels
 # Create data structure
 train_data = {'users': [], 'user_data':{}, 'num_samples':[]}
 test_data = {'users': [], 'user_data':{}, 'num_samples':[]}
-
+print(f"X [0] : {len(X[0][0])}")
 # Setup 5 users
 # for i in trange(5, ncols=120):
 for i in range(NUM_USERS):
@@ -133,6 +133,8 @@ for i in range(NUM_USERS):
 
 print("Num_samples:", train_data['num_samples'])
 print("Total_samples:",sum(train_data['num_samples'] + test_data['num_samples']))
+
+print(f"Test data num sample: {test_data['num_samples']}")
 
 # Save generated samples
 with open(train_path,'w') as outfile:
