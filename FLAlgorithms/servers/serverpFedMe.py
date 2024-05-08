@@ -11,10 +11,10 @@ import numpy as np
 class pFedMe(Server):
     def __init__(self, device,  dataset, algorithm, model, batch_size, learning_rate, beta, lamda, num_glob_iters,
                  local_epochs, optimizer, num_users, K, personal_learning_rate, times):
-        super().__init__(device, dataset,algorithm, model[0], batch_size, learning_rate, beta, lamda, num_glob_iters,
+        super().__init__(device, dataset, algorithm, model[0], batch_size, learning_rate, beta, lamda, num_glob_iters,
                          local_epochs, optimizer, num_users, times)
 
-        # Initialize data for all  users
+        # Initialize data for all users
         data = read_data(dataset)
         total_users = len(data[0])
         self.K = K

@@ -9,12 +9,12 @@ import numpy as np
 # Implementation for FedAvg Server
 
 class FedAvg(Server):
-    def __init__(self, device, dataset,algorithm, model, batch_size, learning_rate, beta, lamda, num_glob_iters,
+    def __init__(self, device, dataset, algorithm, model, batch_size, learning_rate, beta, lamda, num_glob_iters,
                  local_epochs, optimizer, num_users, times):
-        super().__init__(device, dataset,algorithm, model[0], batch_size, learning_rate, beta, lamda, num_glob_iters,
+        super().__init__(device, dataset, algorithm, model[0], batch_size, learning_rate, beta, lamda, num_glob_iters,
                          local_epochs, optimizer, num_users, times)
 
-        # Initialize data for all  users
+        # Initialize data for all users
         data = read_data(dataset)
         total_users = len(data[0])
         for i in range(total_users):
@@ -23,7 +23,7 @@ class FedAvg(Server):
             self.users.append(user)
             self.total_train_samples += user.train_samples
             
-        print("Number of users / total users:",num_users, " / " ,total_users)
+        print("Number of users / total users:", num_users, " / " , total_users)
         print("Finished creating FedAvg server.")
 
     def send_grads(self):
