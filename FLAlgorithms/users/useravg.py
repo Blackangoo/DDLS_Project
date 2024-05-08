@@ -60,6 +60,7 @@ class AttackerGradientReversionAVG(UserAVG):
             for param in self.model.parameters():
                 if param.grad is not None:
                     param.grad = - 5 * param.grad  # Invert the sign of gradients
+                    print("Hello")
 
             self.optimizer.step()
             self.clone_model_paramenter(self.model.parameters(), self.local_model)
