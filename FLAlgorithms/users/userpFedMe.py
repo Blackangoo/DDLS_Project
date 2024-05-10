@@ -74,6 +74,12 @@ class AttackerGradientReversionpFedMe(UserpFedMe):
                 output = self.model(X)
                 loss = self.loss(output, y)
                 loss.backward()
+
+                # Gradient Reversion Attack
+                for param in self.model.parameters():
+                    if param.grad is not None:
+                        param.grad = - 5 * param.grad  # Invert the sign of gradients
+
                 self.persionalized_model_bar, _ = self.optimizer.step(self.local_model)
 
             # update local weight after finding aproximate theta
