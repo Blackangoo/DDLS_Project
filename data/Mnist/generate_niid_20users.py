@@ -107,7 +107,7 @@ for user in trange(NUM_USERS):
             print("check len os user:", user, j,"len data", len(X[user]), num_samples)
 
 print("IDX2:", idx) # counting samples for each labels
-
+print(len(y), len(y[0]))
 # Create data structure
 train_data = {'users': [], 'user_data':{}, 'num_samples':[]}
 test_data = {'users': [], 'user_data':{}, 'num_samples':[]}
