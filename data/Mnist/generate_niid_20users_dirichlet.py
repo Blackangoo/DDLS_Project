@@ -76,13 +76,14 @@ for user in trange(NUM_USERS):
     for split in final_splits[user]: 
         # Splits are tuples with the values of the pixels (as tensors) and the target value
         X[user].append(split[0].flatten().numpy().tolist())
-        y[user].append([split[1]])
+        y[user].append(split[1])
 
-    print(f"User {user}: done, num samples= {len(X[user])}")
+    print(f"\nUser {user}: done, num samples= {len(X[user])}")
+    print(f"Y : {y[user][0:3]}")
 
 
 print(sum([len(X[i]) for i in range(NUM_USERS)]))
-
+print(len(y), len(y[0]))
 # From here it is the same as generate_niid_20users.py
 # Create data structure
 train_data = {'users': [], 'user_data':{}, 'num_samples':[]}
