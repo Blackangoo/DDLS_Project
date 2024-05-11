@@ -20,7 +20,7 @@ npr.seed(1)
 # Define the number of users and labels
 NUM_USERS = 20  # Should be multiple of 10
 NUM_LABELS = 2  # num of labels each user will get
-ALPHA = 1
+ALPHA = 0.5
 
 # Setup directory for train/test data
 train_path = './data/train/mnist_train.json'
