@@ -23,8 +23,8 @@ NUM_LABELS = 2  # num of labels each user will get
 ALPHA = 1
 
 # Setup directory for train/test data
-train_path = './data/train/mnist_train_dirichlet.json'
-test_path = './data/test/mnist_test_dirichlet.json'
+train_path = './data/train/mnist_train.json'
+test_path = './data/test/mnist_test.json'
 dir_path = os.path.dirname(train_path)
 if not os.path.exists(dir_path):
     os.makedirs(dir_path)
