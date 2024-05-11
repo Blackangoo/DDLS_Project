@@ -46,16 +46,8 @@ transform = transforms.Compose([
 ])
 
 train_dataset = datasets.MNIST(data_path_str, download=True, transform=transform)
-# test_loader = DataLoader(
-    # datasets.MNIST(data_path_str, train=False, download=False, transform=transform),
-    # decrease batch size if running into memory issues when testing
-    # a bespoke generator is passed to avoid reproducibility issues
-    # shuffle=False, drop_last=False, batch_size=10000, generator=torch.Generator())
 
-
-
-# def split_dirichlet(nr_clients: int, iid: bool, alpha: float, seed: int) -> list[Subset]:
-
+# Dirichlet split
 rng = npr.default_rng(1)
 client_alphas = np.repeat(ALPHA, NUM_USERS)
 
@@ -76,12 +68,13 @@ for label in np.unique(permuted_targets):
 final_splits =  [Subset(train_dataset, split) for split in cast(list[list[int]], splits)]
 
 
+# Formatting the data to store in a json file
 X = [[] for _ in range(NUM_USERS)]
 y = [[] for _ in range(NUM_USERS)]
 
-for user in range(NUM_USERS):
-    for split in final_splits[user]:
-        # flatten_split = split[0].flatten().numpy()
+for user in trange(NUM_USERS):
+    for split in final_splits[user]: 
+        # Splits are tuples with the values of the pixels (as tensors) and the target value
         X[user].append(split[0].flatten().numpy().tolist())
         y[user].append([split[1]])
 
@@ -90,7 +83,7 @@ for user in range(NUM_USERS):
 
 print(sum([len(X[i]) for i in range(NUM_USERS)]))
 
-
+# From here it is the same as generate_niid_20users.py
 # Create data structure
 train_data = {'users': [], 'user_data':{}, 'num_samples':[]}
 test_data = {'users': [], 'user_data':{}, 'num_samples':[]}
