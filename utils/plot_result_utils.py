@@ -2,6 +2,8 @@ import h5py
 import numpy as np
 import pandas as pd
 import os
+import matplotlib.pyplot as plt
+import json
 
 ###########################################################################################
 # CONSTANTS 
@@ -293,3 +295,38 @@ def max_df(num_users, folders):
     max_results_df = max_results_df.merge(mean_var_results_df, on=["Algorithm", "Folder"])
 
     return max_results_df
+
+def heatmaps(data_dir):
+    DATA_DIR = 'dirichlet_datasets/mnist_train_PerAvg_D1.json'
+    # Load the JSON file
+    with open(DATA_DIR) as f:
+        train_data = json.load(f)
+
+    # Extract users and tags
+    users = train_data['users']
+
+    tags = [str(i) for i in range(10)]  # Assuming tags are from 0 to 9
+
+    # Create a matrix to store tag frequencies for each user
+    matrix = np.zeros((len(tags), len(users)), dtype=int)
+    # Populate the matrix with tag frequencies
+    for idx, user_id in enumerate(users):
+        user_tags = train_data['user_data'][user_id]['y']
+        # print(user_id)
+        # print(user_tags)
+        # print('------------------------------')
+        for tag in user_tags:
+            matrix[int(tag), idx] += 1  # Convert tag to int before indexing
+    users_display = [user_id[-3:] for user_id in users] #Shorten user name
+    # Plot heatmap
+    print(matrix)
+    plt.figure(figsize=(10, 8))
+    plt.imshow(matrix, cmap='hot', interpolation='nearest', aspect='auto')
+    plt.colorbar(label='Frequency')
+    plt.title('Tag Frequency Heatmap')
+    plt.xlabel('User')
+    plt.ylabel('Tag')
+    plt.xticks(range(len(users)), users_display, rotation=45)
+    plt.yticks(range(len(tags)), tags)
+    plt.tight_layout()
+    plt.show()
