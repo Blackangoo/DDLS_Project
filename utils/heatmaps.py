@@ -3,7 +3,7 @@ import json
 import numpy as np
 
 
-DATA_DIR = 'data/Mnist/data/train/mnist_train.json'
+DATA_DIR = 'data/Mnist/data/train/mnist_train_pFedMe_D0_2.json'
 # Load the JSON file
 with open(DATA_DIR) as f:
     train_data = json.load(f)
