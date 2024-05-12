@@ -131,3 +131,5 @@ dmypy.json
 /data/openml
 /data/test
 /data/train
+.DS_Store
+mnist_t*.json
