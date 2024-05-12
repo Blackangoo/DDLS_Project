@@ -94,9 +94,9 @@ test_data = {'users': [], 'user_data':{}, 'num_samples':[]}
 for i in range(NUM_USERS):
     uname = 'f_{0:05d}'.format(i)
     
-    # combined = list(zip(X[i], y[i]))
-    # random.shuffle(combined)
-    # X[i][:], y[i][:] = zip(*combined)
+    combined = list(zip(X[i], y[i]))
+    random.shuffle(combined)
+    X[i][:], y[i][:] = zip(*combined)
     num_samples = len(X[i])
     train_len = int(0.75*num_samples)
     test_len = num_samples - train_len
