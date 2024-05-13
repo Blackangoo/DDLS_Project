@@ -125,14 +125,14 @@ def get_max_value_index(num_users=100, loc_ep1=5, Numb_Glob_Iters=10, lamb=[], l
     Numb_Algs = len(algorithms_list)
     glob_acc, train_acc, train_loss = get_training_data_value(num_users, loc_ep1, Numb_Glob_Iters, lamb, learning_rate, beta, algorithms_list, batch_size, dataset, k, personal_learning_rate, folder)
     
-
-
     for i in range(Numb_Algs):
         results.append({
             "Algorithm": algorithms_list[i],
             "Folder": folder.split("/")[-1],
             "Max testing Accuracy": glob_acc[i].max(),
             "Index": np.argmax(glob_acc[i]),
+            "Mean": np.mean(glob_acc[i]),
+            "Std": np.std(glob_acc[i]),
         })
 
     return pd.DataFrame(results)
@@ -157,6 +157,7 @@ def max_average_df(num_users, folders):
             folder=folder
         )
         results_all.append(results_df)
+        #print(results_df)
 
     # Concatenate all DataFrames
     all_results_df = pd.concat(results_all, ignore_index=True)
@@ -238,7 +239,7 @@ def get_max_value_index_all(num_users=100, loc_ep1=5, Numb_Glob_Iters=10, lamb=0
     """
 
     results = []
-
+    max_accurancy = []
     glob_acc, _, _ = get_all_training_data_value(
         num_users, loc_ep1, Numb_Glob_Iters, lamb, learning_rate, beta, algorithms, batch_size, dataset, k, personal_learning_rate, times, folder)
 
@@ -249,8 +250,16 @@ def get_max_value_index_all(num_users=100, loc_ep1=5, Numb_Glob_Iters=10, lamb=0
             "Max testing Accuracy": glob_acc[i].max(),
             "Index": np.argmax(glob_acc[i]),
         })
+        max_accurancy.append(glob_acc[i].max())
+    mean = np.mean(max_accurancy)
+    std = np.std(max_accurancy)
 
-    return pd.DataFrame(results)
+    df = pd.DataFrame(results)
+
+    df["Mean Max testing Accuracy"] = mean
+    df["Std Max testing Accuracy"] = std
+
+    return df
 
 def max_df(num_users, folders):
     results_all = []
@@ -273,18 +282,18 @@ def max_df(num_users, folders):
                 personal_learning_rate=params[folder_name]["personal_learning_rate"][i]
             )
             results_all.append(results_df)
+            #print(results_all)
 
     # Concatenate all DataFrames
     all_results_df = pd.concat(results_all, ignore_index=True)
 
     # Get only the rows with maximum accuracy for each algorithm and each folder
     max_results_df = all_results_df.loc[all_results_df.groupby(["Algorithm", "Folder"])["Max testing Accuracy"].idxmax()]
-
+    '''
     # Get the mean and variance for each algorithm and each folder
     mean_var_results_df = all_results_df.groupby(["Algorithm", "Folder"]).agg(
         {"Max testing Accuracy": ["mean", "var"]}
     )
-
     # Rename columns
     mean_var_results_df.columns = ["Mean Accuracy", "Variance"]
 
@@ -293,8 +302,12 @@ def max_df(num_users, folders):
 
     # Merge with max_results_df
     max_results_df = max_results_df.merge(mean_var_results_df, on=["Algorithm", "Folder"])
-
+    '''
     return max_results_df
+
+###########################################################################################
+# For the heatmaps
+###########################################################################################
 
 def heatmaps(data_dir):
     DATA_DIR = 'dirichlet_datasets/mnist_train_PerAvg_D1.json'
