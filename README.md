@@ -30,6 +30,10 @@ To visualize the different distribution of the labels per clients:
   <img src="https://raw.githubusercontent.com/Blackangoo/DDLS_Project/main/results_images/datasets/baseline_train.png">
 </p>
 
+<pre><code>
+  test
+</code></pre>
+
 ## Fine-tuned Parameters:
 To produce results in the table of fine-tune parameter:
 
