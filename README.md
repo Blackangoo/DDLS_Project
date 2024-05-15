@@ -32,7 +32,12 @@ To visualize the different distribution of the labels per clients:
 </p>
 
 <pre><code>
-  python3 
+  python3 plot_heat.py --DATA_DIR PATH
+</code></pre>
+
+Example:
+<pre><code>
+  python3 plot_heat.py --DATA_DIR dirichlet_datasets/with_shuffle/mnist_train_D1.json
 </code></pre>
 
 ## Fine-tuned Parameters:
