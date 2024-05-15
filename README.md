@@ -24,6 +24,12 @@ This repository does not only implement pFedMe but also FedAvg, and Per-FedAvg a
 
 - All the train loss, testing accuracy, and training accuracy will be stored as h5py file in the folder "results". It is noted that we store the data for persionalized model and global of pFedMe in 2 separate files following format: DATASET_pFedMe_p_x_x_xu_xb_x_avg.h5 and DATASET_pFedMe_x_x_xu_xb_x_avg.h5 respectively (pFedMe for global model, pFedMe_p for personalized model of pFedMe, PerAvg_p is for personalized model of PerAvg).
 
+## Heatmaps
+To visualize the different distribution of the labels per clients:
+<p align="center">
+  <img src="https://raw.githubusercontent.com/Blackangoo/DDLS_Project/main/results_images/datasets/baseline_train.png">
+</p>
+
 ## Fine-tuned Parameters:
 To produce results in the table of fine-tune parameter:
 
