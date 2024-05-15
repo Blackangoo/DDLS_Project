@@ -1,0 +1,13 @@
+MCLR:
+
+FedAvg: 1	No
+	0.5	No
+	0.2	No
+
+pFedMe: 1	No
+	0.5	No
+	0.2	Running
+
+PerAvg: 1	No
+	0.5	No
+	0.2	Running
