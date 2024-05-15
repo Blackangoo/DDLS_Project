@@ -100,6 +100,7 @@ for i in range(NUM_USERS):
     num_samples = len(X[i])
     train_len = int(0.75*num_samples)
     test_len = num_samples - train_len
+    print('shuffled')
     
     train_data['users'].append(uname) 
     train_data['user_data'][uname] = {'x': X[i][:train_len], 'y': y[i][:train_len]}
