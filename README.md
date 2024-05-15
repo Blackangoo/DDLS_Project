@@ -13,6 +13,7 @@ This repository does not only implement pFedMe but also FedAvg, and Per-FedAvg a
   - Access data/Mnist and run: "python3 generate_niid_20users.py"
 - To generate non-iid MNIST Data based on a Dirichlet distribution:
   - Access data/Mnist and run: "python3 generate_niid_20users_dirichlet.py"
+  - We can change the $\alpha$ using the variable ALPHA = 0.2
 
 - The datasets also are available to download at: https://drive.google.com/drive/folders/1mzdFPHgYjjvR8Yspfv3WxfGK855Z41Ak
 
@@ -31,7 +32,7 @@ To visualize the different distribution of the labels per clients:
 </p>
 
 <pre><code>
-  test
+  python3 
 </code></pre>
 
 ## Fine-tuned Parameters:
