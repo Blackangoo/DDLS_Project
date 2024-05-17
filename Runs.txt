@@ -15,13 +15,13 @@ PerAvg: 1	Yes
 DNN:
 
 FedAvg: 1	Yes
-	0.5	Running VM1
-	0.2	No 
+	0.5	Yes
+	0.2	Yes
 
-pFedMe: 1	Running VM2
-	0.5	No
-	0.2	No 
+pFedMe: 1	Yes VM2
+	0.5	Running VM1
+	0.2	Running VM3
 
 PerAvg: 1	Yes
 	0.5	Yes
-	0.2	Running VM3
+	0.2	Yes
