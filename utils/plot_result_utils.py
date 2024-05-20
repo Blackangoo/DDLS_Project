@@ -168,19 +168,24 @@ def max_average_df(num_users, folders):
 
 def average_smooth(data, window_len=20, window='hanning'):
     results = []
-    if window_len<3:
+    if window_len < 3:
         return data
     for i in range(len(data)):
         x = data[i]
-        s=np.r_[x[window_len-1:0:-1],x,x[-2:-window_len-1:-1]]
-        #print(len(s))
+        print(f"Original data for index {i}: {x}, {len(x)}")
+        s=np.r_[x[window_len-1:0:-1], x, x[-2:-window_len-1:-1]]
+        #print(f"Extended data for index {i}: {s}")
         if window == 'flat': #moving average
-            w=np.ones(window_len,'d')
+            w = np.ones(window_len, 'd')
         else:
-            w=eval('numpy.'+window+'(window_len)')
+            w = eval('np.'+ window + '(window_len)')
+        #print(f"Window for index {i}: {w}")
 
-        y=np.convolve(w/w.sum(),s,mode='valid')
+        y=np.convolve(w/w.sum(), s, mode='valid')
+        #print(f"Smoothed data for index {i}: {y}")
+
         results.append(y[window_len-1:])
+        #print(f"Final smoothed data for index {i}: {y[window_len-1:]}")
     return np.array(results)
 
 ###########################################################################################
@@ -389,6 +394,10 @@ def plot_summary_one_figure_mnist_Compare(num_users, loc_ep1, Numb_Glob_Iters, l
     glob_acc =  average_smooth(glob_acc_, window='flat')
     train_loss = average_smooth(train_loss_, window='flat')
     train_acc = average_smooth(train_acc_, window='flat')
+
+    print(f"Shape of glob_acc_: {glob_acc.shape}")
+    print(f"Shape of train_acc_: {train_acc.shape}")
+    print(f"Shape of train_loss_: {train_loss.shape}")
     
     linestyles = ['-', '--', '-.','-', '--', '-.']
     linestyles = ['-','-','-','-','-','-','-']
@@ -399,6 +408,7 @@ def plot_summary_one_figure_mnist_Compare(num_users, loc_ep1, Numb_Glob_Iters, l
     plt.grid(True)
     # training loss
     for i in range(Numb_Algs):
+        print(f"Algorithm {i}: {algorithms_list[i]}, Data length: {len(train_loss[i, 1:])}")
         label = get_label_name(algorithms_list[i])
         plt.plot(train_loss[i, 1:], linestyle=linestyles[i], label=label, linewidth = 1, color=colors[i],marker = markers[i],markevery=0.2, markersize=5)
     plt.legend(loc='upper right')
@@ -416,6 +426,7 @@ def plot_summary_one_figure_mnist_Compare(num_users, loc_ep1, Numb_Glob_Iters, l
     plt.grid(True)
     # Global accurancy
     for i in range(Numb_Algs):
+        print(f"Algorithm {i}: {algorithms_list[i]}, Data length: {len(glob_acc[i, 1:])}")
         label = get_label_name(algorithms_list[i])
         plt.plot(glob_acc[i, 1:], linestyle=linestyles[i], label=label, linewidth = 1, color=colors[i],marker = markers[i],markevery=0.2, markersize=5)
     plt.legend(loc='lower right')
