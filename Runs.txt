@@ -2,22 +2,25 @@ MCLR:
 
 FedAvg: 1	Yes
 	0.5	Yes
-	0.2	Yes 
+	0.2	Yes
+	0.05	Yes VM2
 
 pFedMe: 1	Yes
 	0.5	Yes
 	0.2	Yes 
+	0.05	No
 
 PerAvg: 1	Yes
 	0.5	Yes 
 	0.2	Yes
+	0.05	Running VM3
 
 DNN:
 
 FedAvg: 1	Yes
 	0.5	Yes
 	0.2	Yes
-	0.05	Running VM2
+	0.05	Yes
 
 pFedMe: 1	Yes
 	0.5	Yes 
@@ -27,7 +30,7 @@ pFedMe: 1	Yes
 PerAvg: 1	Yes
 	0.5	Yes
 	0.2	Yes
-	0.05	Running VM3
+	0.05	Yes
 
 Attacks:
 
