@@ -379,43 +379,39 @@ def get_label_name(name):
     if name.startswith("APFL"):
         return "APFL"
 
-def plot_summary_one_figure_mnist_Compare(num_users, loc_ep1, Numb_Glob_Iters, lamb, learning_rate, beta, algorithms_list, batch_size, dataset, k, personal_learning_rate):
+def plot_summary_one_figure_mnist_Compare(num_users, loc_ep1, Numb_Glob_Iters, lamb, learning_rate, beta, algorithms_list, batch_size, dataset, k, personal_learning_rate, folder, y_lim):
     Numb_Algs = len(algorithms_list)   
     dataset = dataset
-    
-    glob_acc_, train_acc_, train_loss_ = get_training_data_value( num_users, loc_ep1, Numb_Glob_Iters, lamb, learning_rate, beta, algorithms_list, batch_size, dataset, k, personal_learning_rate )
-    for i in range(Numb_Algs):
-        print("max accurancy:", glob_acc_[i].max())
+    folder_path = folder[2:]
+    folder_name = folder.split("/")[-1]
+    glob_acc_, train_acc_, train_loss_ = get_training_data_value( num_users, loc_ep1, Numb_Glob_Iters, lamb, learning_rate, beta, algorithms_list, batch_size, dataset, k, personal_learning_rate, folder)
     glob_acc =  average_smooth(glob_acc_, window='flat')
     train_loss = average_smooth(train_loss_, window='flat')
     train_acc = average_smooth(train_acc_, window='flat')
     
     linestyles = ['-', '--', '-.','-', '--', '-.']
     linestyles = ['-','-','-','-','-','-','-']
-    #linestyles = ['-','-','-','-','-','-','-']
     markers = ["o","v","s","*","x","P"]
-    print(lamb)
     colors = ['tab:blue', 'tab:green', 'r', 'darkorange', 'tab:brown', 'm']
-    plt.figure(1,figsize=(5, 5))
-    plt.title("$\mu-$"+ "strongly convex")
-    # plt.title("Nonconvex") # for non convex case
+    plt.figure(1, figsize=(5, 5))
+    plt.title(folder_name)
     plt.grid(True)
     # training loss
-    marks = []
     for i in range(Numb_Algs):
         label = get_label_name(algorithms_list[i])
         plt.plot(train_loss[i, 1:], linestyle=linestyles[i], label=label, linewidth = 1, color=colors[i],marker = markers[i],markevery=0.2, markersize=5)
     plt.legend(loc='upper right')
     plt.ylabel('Training Loss')
     plt.xlabel('Global rounds')
-    #plt.ylim([0.05,  0.6]) # non convex-case
-    plt.ylim([0.19,  0.4]) # convex-case
+    if y_lim:
+        plt.ylim([0,  0.6])
     plt.gca().yaxis.set_major_formatter(StrMethodFormatter('{x:,.2f}')) # 2 decimal places
-    plt.savefig(dataset.upper() + "Convex_Mnist_train_Com.pdf", bbox_inches="tight")
-    #plt.savefig(dataset.upper() + "Non_Convex_Mnist_train_Com.pdf", bbox_inches="tight")
-    plt.figure(2,figsize=(5, 5))
-    plt.title("$\mu-$"+ "strongly convex")
-    # plt.title("Nonconvex") # for non convex case
+    plt.savefig(folder_path + "_train.png", bbox_inches="tight")
+    plt.show()
+    plt.close()
+
+    plt.figure(2, figsize=(5, 5))
+    plt.title(folder_name)
     plt.grid(True)
     # Global accurancy
     for i in range(Numb_Algs):
@@ -424,8 +420,26 @@ def plot_summary_one_figure_mnist_Compare(num_users, loc_ep1, Numb_Glob_Iters, l
     plt.legend(loc='lower right')
     plt.ylabel('Test Accuracy')
     plt.xlabel('Global rounds')
-    #plt.ylim([0.84,  0.98]) # non convex-case
-    plt.ylim([0.88,  0.95]) # Convex-case
-    plt.savefig(dataset.upper() + "Convex_Mnist_test_Com.pdf", bbox_inches="tight")
-    #plt.savefig(dataset.upper() + "Non_Convex_Mnist_test_Com.pdf", bbox_inches="tight")
+    if y_lim:
+        plt.ylim([0.84,  0.98]) # non convex-case
+    plt.savefig(folder_path + "_test.png", bbox_inches="tight")
+    plt.show()
     plt.close()
+
+def plot_comparison(num_users, folders, y_lim=True):
+    for folder in folders:
+        folder_name = folder.split("/")[-1]
+        print(folder)
+        plot_summary_one_figure_mnist_Compare(num_users=num_users,
+                                            loc_ep1=params[folder_name]["local_epochs"],
+                                            Numb_Glob_Iters=Numb_Glob_Iters,
+                                            lamb=params[folder_name]["lambdas"],
+                                            learning_rate=params[folder_name]["learning_rates"],
+                                            beta = params[folder_name]["betas"],
+                                            algorithms_list=algorithms,
+                                            batch_size=params[folder_name]["batch_sizes"],
+                                            dataset=dataset,
+                                            folder=folder,
+                                            k = params[folder_name]["K"],
+                                            personal_learning_rate = params[folder_name]["personal_learning_rate"],
+                                            y_lim =  y_lim)
