@@ -89,6 +89,7 @@ class UserPerAvg(User):
 
 class AttackerGradientReversionperAvg(UserPerAvg):
     def train(self, epochs):
+        print("coucou3")
         LOSS = 0
         self.model.train()
     def train(self, epochs):
@@ -133,6 +134,7 @@ class AttackerGradientReversionperAvg(UserPerAvg):
         return LOSS    
 
     def train_one_step(self):
+        print("coucou2")
         self.model.train()
         #step 1
         X, y = self.get_next_test_batch()
