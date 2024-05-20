@@ -89,11 +89,9 @@ class UserPerAvg(User):
 
 class AttackerGradientReversionperAvg(UserPerAvg):
     def train(self, epochs):
-        print("coucou3")
         LOSS = 0
         self.model.train()
     def train(self, epochs):
-        print("coucou")
         LOSS = 0
         self.model.train()
         for epoch in range(1, self.local_epochs + 1):  # local update 
@@ -121,10 +119,7 @@ class AttackerGradientReversionperAvg(UserPerAvg):
             for old_p, new_p in zip(self.model.parameters(), temp_model):
                 old_p.data = new_p.data.clone()
             
-            # Gradient Reversion Attack
-            for param in self.model.parameters():
-                if param.grad is not None:
-                    param.grad = -5 * param.grad  # Invert the sign of gradients
+            
 
             self.optimizer.step(beta = self.beta)
 
@@ -134,7 +129,6 @@ class AttackerGradientReversionperAvg(UserPerAvg):
         return LOSS    
 
     def train_one_step(self):
-        print("coucou2")
         self.model.train()
         #step 1
         X, y = self.get_next_test_batch()
