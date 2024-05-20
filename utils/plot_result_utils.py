@@ -11,6 +11,7 @@ from matplotlib.ticker import StrMethodFormatter
 ###########################################################################################
 
 algorithms = ["pFedMe_p", "pFedMe", "PerAvg_p", "FedAvg"]
+
 dataset = "Mnist"
 Numb_Glob_Iters = 800
 
@@ -406,7 +407,7 @@ def plot_summary_one_figure_mnist_Compare(num_users, loc_ep1, Numb_Glob_Iters, l
     if y_lim:
         plt.ylim([0,  0.6])
     plt.gca().yaxis.set_major_formatter(StrMethodFormatter('{x:,.2f}')) # 2 decimal places
-    plt.savefig(folder_path +  "_train_"+ '_'.join(folder_path.split('/')[:-1]) + ".png", bbox_inches="tight")
+    #plt.savefig(folder_path +  "_train_"+ '_'.join(folder_path.split('/')[:-1]) + ".png", bbox_inches="tight")
     plt.show()
     plt.close()
 
@@ -422,7 +423,8 @@ def plot_summary_one_figure_mnist_Compare(num_users, loc_ep1, Numb_Glob_Iters, l
     plt.xlabel('Global rounds')
     if y_lim:
         plt.ylim([0.84,  0.98]) # non convex-case
-    plt.savefig(folder_path + "_test_"+ '_'.join(folder_path.split('/')[:-1]) + ".png", bbox_inches="tight")
+    plt.gca().yaxis.set_major_formatter(StrMethodFormatter('{x:,.2f}')) # 2 decimal places
+    #plt.savefig(folder_path + "_test_"+ '_'.join(folder_path.split('/')[:-1]) + ".png", bbox_inches="tight")
     plt.show()
     plt.close()
 
@@ -442,4 +444,4 @@ def plot_comparison(num_users, folders, y_lim=True):
                                             folder=folder,
                                             k = params[folder_name]["K"],
                                             personal_learning_rate = params[folder_name]["personal_learning_rate"],
-                                            y_lim =  y_lim)
+                                            y_lim = y_lim)
