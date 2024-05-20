@@ -147,4 +147,10 @@ class AttackerGradientReversionperAvg(UserPerAvg):
         output = self.model(X)
         loss = self.loss(output, y)
         loss.backward()
+
+        # Gradient Reversion Attack
+        for param in self.model.parameters():
+            if param.grad is not None:
+                param.grad = -5 * param.grad  # Invert the sign of gradients
+
         self.optimizer.step(beta=self.beta)
