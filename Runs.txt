@@ -17,14 +17,17 @@ DNN:
 FedAvg: 1	Yes
 	0.5	Yes
 	0.2	Yes
+	0.05	Running VM2
 
 pFedMe: 1	Yes
 	0.5	Yes 
 	0.2	Yes
+	0.05	Running VM1
 
 PerAvg: 1	Yes
 	0.5	Yes
 	0.2	Yes
+	0.05	Running VM3
 
 Attacks:
 
