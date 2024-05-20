@@ -171,8 +171,8 @@ def average_smooth(data, window_len=20, window='hanning'):
     if window_len < 3:
         return data
     for i in range(len(data)):
-        x = data[i]
-        print(f"Original data for index {i}: {x}, {len(x)}")
+        x = np.nan_to_num(data[i]) 
+        #print(f"Original data for index {i}: {x}, {len(x)}")
         s=np.r_[x[window_len-1:0:-1], x, x[-2:-window_len-1:-1]]
         #print(f"Extended data for index {i}: {s}")
         if window == 'flat': #moving average
@@ -181,11 +181,13 @@ def average_smooth(data, window_len=20, window='hanning'):
             w = eval('np.'+ window + '(window_len)')
         #print(f"Window for index {i}: {w}")
 
-        y=np.convolve(w/w.sum(), s, mode='valid')
-        #print(f"Smoothed data for index {i}: {y}")
+        if s.any():
+            y=np.convolve(w/w.sum(), s, mode='valid')
+            #print(f"Smoothed data for index {i}: {y}")
 
-        results.append(y[window_len-1:])
-        #print(f"Final smoothed data for index {i}: {y[window_len-1:]}")
+            results.append(y[window_len-1:])
+            #print(f"Final smoothed data for index {i}: {y[window_len-1:]}")
+    print(results)
     return np.array(results)
 
 ###########################################################################################
@@ -406,8 +408,9 @@ def plot_summary_one_figure_mnist_Compare(num_users, loc_ep1, Numb_Glob_Iters, l
     plt.figure(1, figsize=(5, 5))
     plt.title(folder_name)
     plt.grid(True)
+    print('train loss: ', train_loss)
     # training loss
-    for i in range(Numb_Algs):
+    for i in range(len(train_loss)):
         print(f"Algorithm {i}: {algorithms_list[i]}, Data length: {len(train_loss[i, 1:])}")
         label = get_label_name(algorithms_list[i])
         plt.plot(train_loss[i, 1:], linestyle=linestyles[i], label=label, linewidth = 1, color=colors[i],marker = markers[i],markevery=0.2, markersize=5)
