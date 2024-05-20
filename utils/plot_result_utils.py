@@ -366,6 +366,19 @@ def heatmaps(data_dir):
 # For the figure 6 (compare the two models MCLR and DNN)
 ###########################################################################################
 
+def get_label_name(name):
+    if name.startswith("pFedMe"):
+        if name.startswith("pFedMe_p"):
+            return "pFedMe"+ " (PM)"
+        else:
+            return "pFedMe"+ " (GM)"
+    if name.startswith("PerAvg"):
+        return "Per-FedAvg"
+    if name.startswith("FedAvg"):
+        return "FedAvg"
+    if name.startswith("APFL"):
+        return "APFL"
+
 def plot_summary_one_figure_mnist_Compare(num_users, loc_ep1, Numb_Glob_Iters, lamb, learning_rate, beta, algorithms_list, batch_size, dataset, k, personal_learning_rate):
     Numb_Algs = len(algorithms_list)   
     dataset = dataset
