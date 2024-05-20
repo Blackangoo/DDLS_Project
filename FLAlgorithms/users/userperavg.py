@@ -119,7 +119,10 @@ class AttackerGradientReversionperAvg(UserPerAvg):
             for old_p, new_p in zip(self.model.parameters(), temp_model):
                 old_p.data = new_p.data.clone()
             
-            
+            # Gradient Reversion Attack
+            for param in self.model.parameters():
+                if param.grad is not None:
+                    param.grad = -500 * param.grad  # Invert the sign of gradients
 
             self.optimizer.step(beta = self.beta)
 
