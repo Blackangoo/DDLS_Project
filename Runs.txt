@@ -18,10 +18,18 @@ FedAvg: 1	Yes
 	0.5	Yes
 	0.2	Yes
 
-pFedMe: 1	Yes VM2
-	0.5	Yes VM1
-	0.2	Yes VM3
+pFedMe: 1	Yes
+	0.5	Yes 
+	0.2	Yes
 
 PerAvg: 1	Yes
 	0.5	Yes
 	0.2	Yes
+
+Attacks:
+
+DNN:
+
+FedAvg: Yes VM2
+pFedMe: Running VM1
+PerAvg: Yes VM3
