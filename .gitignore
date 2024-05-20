@@ -133,3 +133,5 @@ dmypy.json
 /data/train
 .DS_Store
 mnist_t*.json
+
+Runs.txt
