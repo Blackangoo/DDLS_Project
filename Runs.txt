@@ -31,5 +31,7 @@ Attacks:
 DNN:
 
 FedAvg: Yes VM2
-pFedMe: Running VM1
+pFedMe: Yes VM1
 PerAvg: Yes VM3
+
+test attacks on perAvg
