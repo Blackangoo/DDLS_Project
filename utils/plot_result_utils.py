@@ -432,6 +432,7 @@ def plot_summary_one_figure_mnist_Compare(num_users, loc_ep1, Numb_Glob_Iters, l
         #print(f"Algorithm {i}: {algorithms_list[i]}, Data length: {len(glob_acc[i, 1:])}")
         label = get_label_name(algorithms_list[i])
         plt.plot(glob_acc[i, 1:], linestyle=linestyles[i], label=label, linewidth = 1, color=colors[i],marker = markers[i],markevery=0.2, markersize=5)
+        print(label, glob_acc[i, -1])
     plt.legend(loc='lower right')
     plt.ylabel('Test Accuracy')
     plt.xlabel('Global rounds')
