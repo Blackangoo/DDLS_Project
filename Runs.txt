@@ -13,7 +13,7 @@ pFedMe: 1	Yes
 PerAvg: 1	Yes
 	0.5	Yes 
 	0.2	Yes
-	0.05	Yes VM3
+	0.05	Yes 
 
 DNN:
 
@@ -36,8 +36,8 @@ Attacks:
 
 DNN:
 
-FedAvg: Yes VM2
-pFedMe: Yes VM1
+FedAvg: Yes
+pFedMe: Yes
 PerAvg: Yes VM3
 
 test attacks on perAvg
