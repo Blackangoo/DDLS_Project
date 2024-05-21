@@ -171,7 +171,7 @@ def average_smooth(data, window_len=20, window='hanning'):
     if window_len < 3:
         return data
     for i in range(len(data)):
-        x = np.nan_to_num(data[i]) 
+        x = data[i]
         #print(f"Original data for index {i}: {x}, {len(x)}")
         s=np.r_[x[window_len-1:0:-1], x, x[-2:-window_len-1:-1]]
         #print(f"Extended data for index {i}: {s}")
@@ -187,7 +187,7 @@ def average_smooth(data, window_len=20, window='hanning'):
 
             results.append(y[window_len-1:])
             #print(f"Final smoothed data for index {i}: {y[window_len-1:]}")
-    print(results)
+    #print(results)
     return np.array(results)
 
 ###########################################################################################
@@ -397,9 +397,9 @@ def plot_summary_one_figure_mnist_Compare(num_users, loc_ep1, Numb_Glob_Iters, l
     train_loss = average_smooth(train_loss_, window='flat')
     train_acc = average_smooth(train_acc_, window='flat')
 
-    print(f"Shape of glob_acc_: {glob_acc.shape}")
-    print(f"Shape of train_acc_: {train_acc.shape}")
-    print(f"Shape of train_loss_: {train_loss.shape}")
+    #print(f"Shape of glob_acc_: {glob_acc.shape}")
+    #print(f"Shape of train_acc_: {train_acc.shape}")
+    #print(f"Shape of train_loss_: {train_loss.shape}")
     
     linestyles = ['-', '--', '-.','-', '--', '-.']
     linestyles = ['-','-','-','-','-','-','-']
@@ -408,10 +408,10 @@ def plot_summary_one_figure_mnist_Compare(num_users, loc_ep1, Numb_Glob_Iters, l
     plt.figure(1, figsize=(5, 5))
     plt.title(folder_name)
     plt.grid(True)
-    print('train loss: ', train_loss)
+    #print('train loss: ', train_loss)
     # training loss
     for i in range(len(train_loss)):
-        print(f"Algorithm {i}: {algorithms_list[i]}, Data length: {len(train_loss[i, 1:])}")
+        #print(f"Algorithm {i}: {algorithms_list[i]}, Data length: {len(train_loss[i, 1:])}")
         label = get_label_name(algorithms_list[i])
         plt.plot(train_loss[i, 1:], linestyle=linestyles[i], label=label, linewidth = 1, color=colors[i],marker = markers[i],markevery=0.2, markersize=5)
     plt.legend(loc='upper right')
@@ -420,7 +420,7 @@ def plot_summary_one_figure_mnist_Compare(num_users, loc_ep1, Numb_Glob_Iters, l
     if y_lim:
         plt.ylim([0,  0.6])
     plt.gca().yaxis.set_major_formatter(StrMethodFormatter('{x:,.2f}')) # 2 decimal places
-    #plt.savefig(folder_path +  "_train_"+ '_'.join(folder_path.split('/')[:-1]) + ".png", bbox_inches="tight")
+    plt.savefig(folder_path +  "_train_"+ '_'.join(folder_path.split('/')[:-1]) + ".png", bbox_inches="tight")
     plt.show()
     plt.close()
 
@@ -429,23 +429,23 @@ def plot_summary_one_figure_mnist_Compare(num_users, loc_ep1, Numb_Glob_Iters, l
     plt.grid(True)
     # Global accurancy
     for i in range(Numb_Algs):
-        print(f"Algorithm {i}: {algorithms_list[i]}, Data length: {len(glob_acc[i, 1:])}")
+        #print(f"Algorithm {i}: {algorithms_list[i]}, Data length: {len(glob_acc[i, 1:])}")
         label = get_label_name(algorithms_list[i])
         plt.plot(glob_acc[i, 1:], linestyle=linestyles[i], label=label, linewidth = 1, color=colors[i],marker = markers[i],markevery=0.2, markersize=5)
     plt.legend(loc='lower right')
     plt.ylabel('Test Accuracy')
     plt.xlabel('Global rounds')
     if y_lim:
-        plt.ylim([0.84,  0.98]) # non convex-case
+        plt.ylim([0.80,  1.0]) # non convex-case
     plt.gca().yaxis.set_major_formatter(StrMethodFormatter('{x:,.2f}')) # 2 decimal places
-    #plt.savefig(folder_path + "_test_"+ '_'.join(folder_path.split('/')[:-1]) + ".png", bbox_inches="tight")
+    plt.savefig(folder_path + "_test_"+ '_'.join(folder_path.split('/')[:-1]) + ".png", bbox_inches="tight")
     plt.show()
     plt.close()
 
 def plot_comparison(num_users, folders, y_lim=True):
     for folder in folders:
         folder_name = folder.split("/")[-1]
-        print(folder)
+        #print(folder)
         plot_summary_one_figure_mnist_Compare(num_users=num_users,
                                             loc_ep1=params[folder_name]["local_epochs"],
                                             Numb_Glob_Iters=Numb_Glob_Iters,
