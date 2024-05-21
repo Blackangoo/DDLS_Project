@@ -392,10 +392,10 @@ def plot_summary_one_figure_mnist_Compare(num_users, loc_ep1, Numb_Glob_Iters, l
     dataset = dataset
     folder_path = folder[2:]
     folder_name = folder.split("/")[-1]
-    glob_acc_, train_acc_, train_loss_ = get_training_data_value( num_users, loc_ep1, Numb_Glob_Iters, lamb, learning_rate, beta, algorithms_list, batch_size, dataset, k, personal_learning_rate, folder)
-    glob_acc =  average_smooth(glob_acc_, window='flat')
-    train_loss = average_smooth(train_loss_, window='flat')
-    train_acc = average_smooth(train_acc_, window='flat')
+    glob_acc, train_acc, train_loss = get_training_data_value( num_users, loc_ep1, Numb_Glob_Iters, lamb, learning_rate, beta, algorithms_list, batch_size, dataset, k, personal_learning_rate, folder)
+    #glob_acc =  average_smooth(glob_acc_, window='flat')
+    #train_loss = average_smooth(train_loss_, window='flat')
+    #train_acc = average_smooth(train_acc_, window='flat')
 
     #print(f"Shape of glob_acc_: {glob_acc.shape}")
     #print(f"Shape of train_acc_: {train_acc.shape}")
@@ -420,7 +420,7 @@ def plot_summary_one_figure_mnist_Compare(num_users, loc_ep1, Numb_Glob_Iters, l
     if y_lim:
         plt.ylim([0,  0.6])
     plt.gca().yaxis.set_major_formatter(StrMethodFormatter('{x:,.2f}')) # 2 decimal places
-    plt.savefig(folder_path +  "_train_"+ '_'.join(folder_path.split('/')[:-1]) + ".png", bbox_inches="tight")
+    #plt.savefig(folder_path +  "_train_"+ '_'.join(folder_path.split('/')[:-1]) + ".png", bbox_inches="tight")
     plt.show()
     plt.close()
 
@@ -439,7 +439,7 @@ def plot_summary_one_figure_mnist_Compare(num_users, loc_ep1, Numb_Glob_Iters, l
     if y_lim:
         plt.ylim([0.80,  1.0]) # non convex-case
     plt.gca().yaxis.set_major_formatter(StrMethodFormatter('{x:,.2f}')) # 2 decimal places
-    plt.savefig(folder_path + "_test_"+ '_'.join(folder_path.split('/')[:-1]) + ".png", bbox_inches="tight")
+    #plt.savefig(folder_path + "_test_"+ '_'.join(folder_path.split('/')[:-1]) + ".png", bbox_inches="tight")
     plt.show()
     plt.close()
 
