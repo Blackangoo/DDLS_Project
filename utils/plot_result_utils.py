@@ -130,8 +130,8 @@ def get_max_value_index(num_users=100, loc_ep1=5, Numb_Glob_Iters=10, lamb=[], l
     for i in range(Numb_Algs):
         results.append({
             "Algorithm": algorithms_list[i],
-            "Folder": folder.split("/")[-1],
-            "Max testing Accuracy": glob_acc[i].max(),
+            "Case": folder.split("/")[-1],
+            "Max global Accuracy": glob_acc[i].max(),
             "Index": np.argmax(glob_acc[i]),
             "Mean": np.mean(glob_acc[i]),
             "Std": np.std(glob_acc[i]),
@@ -272,8 +272,8 @@ def get_max_value_index_all(num_users=100, loc_ep1=5, Numb_Glob_Iters=10, lamb=0
     for i in range(times):
         results.append({
             "Algorithm": algorithms,
-            "Folder": folder.split("/")[-1],
-            "Max testing Accuracy": glob_acc[i].max(),
+            "Case": folder.split("/")[-1],
+            "Max global Accuracy": glob_acc[i].max(),
             "Index": np.argmax(glob_acc[i]),
         })
         max_accurancy.append(glob_acc[i].max())
@@ -282,8 +282,8 @@ def get_max_value_index_all(num_users=100, loc_ep1=5, Numb_Glob_Iters=10, lamb=0
 
     df = pd.DataFrame(results)
 
-    df["Mean Max testing Accuracy"] = mean
-    df["Std Max testing Accuracy"] = std
+    df["Mean Max global Accuracy"] = mean
+    df["Std Max global Accuracy"] = std
 
     return df
 
@@ -314,7 +314,7 @@ def max_df(num_users, folders):
     all_results_df = pd.concat(results_all, ignore_index=True)
 
     # Get only the rows with maximum accuracy for each algorithm and each folder
-    max_results_df = all_results_df.loc[all_results_df.groupby(["Algorithm", "Folder"])["Max testing Accuracy"].idxmax()]
+    max_results_df = all_results_df.loc[all_results_df.groupby(["Algorithm", "Case"])["Max global Accuracy"].idxmax()]
     '''
     # Get the mean and variance for each algorithm and each folder
     mean_var_results_df = all_results_df.groupby(["Algorithm", "Folder"]).agg(
