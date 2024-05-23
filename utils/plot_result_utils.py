@@ -405,8 +405,11 @@ def plot_summary_one_figure_mnist_Compare(num_users, loc_ep1, Numb_Glob_Iters, l
     linestyles = ['-','-','-','-','-','-','-']
     markers = ["o","v","s","*","x","P"]
     colors = ['tab:blue', 'tab:green', 'r', 'darkorange', 'tab:brown', 'm']
+
+    font_size = 14
+
     plt.figure(1, figsize=(5, 5))
-    plt.title(folder_name)
+    plt.title(folder_name, fontsize=font_size, loc='center')
     plt.grid(True)
     #print('train loss: ', train_loss)
     # training loss
@@ -414,18 +417,20 @@ def plot_summary_one_figure_mnist_Compare(num_users, loc_ep1, Numb_Glob_Iters, l
         #print(f"Algorithm {i}: {algorithms_list[i]}, Data length: {len(train_loss[i, 1:])}")
         label = get_label_name(algorithms_list[i])
         plt.plot(train_loss[i, 1:], linestyle=linestyles[i], label=label, linewidth = 1, color=colors[i],marker = markers[i],markevery=0.2, markersize=5)
-    plt.legend(loc='upper right')
-    plt.ylabel('Training Loss')
-    plt.xlabel('Global rounds')
+    #plt.legend(loc='upper right', fontsize=legend_size)
+    plt.ylabel('Training Loss', fontsize=font_size)
+    plt.xlabel('Global rounds', fontsize=font_size)
     if y_lim:
         plt.ylim([0,  0.6])
     plt.gca().yaxis.set_major_formatter(StrMethodFormatter('{x:,.2f}')) # 2 decimal places
+    plt.xticks(fontsize=font_size)
+    plt.yticks(fontsize=font_size)
     #plt.savefig(folder_path +  "_train_"+ '_'.join(folder_path.split('/')[:-1]) + ".png", bbox_inches="tight")
     plt.show()
     plt.close()
 
     plt.figure(2, figsize=(5, 5))
-    plt.title(folder_name)
+    plt.title(folder_name, fontsize=font_size, loc='center')
     plt.grid(True)
     # Global accurancy
     for i in range(Numb_Algs):
@@ -433,12 +438,14 @@ def plot_summary_one_figure_mnist_Compare(num_users, loc_ep1, Numb_Glob_Iters, l
         label = get_label_name(algorithms_list[i])
         plt.plot(glob_acc[i, 1:], linestyle=linestyles[i], label=label, linewidth = 1, color=colors[i],marker = markers[i],markevery=0.2, markersize=5)
         print(label, glob_acc[i, -1])
-    plt.legend(loc='lower right')
-    plt.ylabel('Test Accuracy')
-    plt.xlabel('Global rounds')
+    plt.legend(loc='lower right', fontsize=font_size)
+    plt.ylabel('Test Accuracy', fontsize=font_size)
+    plt.xlabel('Global rounds', fontsize=font_size)
     if y_lim:
         plt.ylim([0.80,  1.0]) # non convex-case
     plt.gca().yaxis.set_major_formatter(StrMethodFormatter('{x:,.2f}')) # 2 decimal places
+    plt.xticks(fontsize=font_size)
+    plt.yticks(fontsize=font_size)
     #plt.savefig(folder_path + "_test_"+ '_'.join(folder_path.split('/')[:-1]) + ".png", bbox_inches="tight")
     plt.show()
     plt.close()
