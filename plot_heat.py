@@ -2,7 +2,13 @@ import argparse
 import json
 import numpy as np
 import matplotlib.pyplot as plt
-#DATA_DIR = 'dirichlet_datasets/with_shuffle/mnist_train_D1.json'
+
+# DATA_DIR = 'dirichlet_datasets/with_shuffle/mnist_train_D1.json'
+
+SMALL_SIZE = 14
+MEDIUM_SIZE = 16
+BIGGER_SIZE = 20
+
 def main(DATA_DIR):
     # Load the JSON file
     with open(DATA_DIR) as f:
@@ -23,17 +29,19 @@ def main(DATA_DIR):
         # print('------------------------------')
         for tag in user_tags:
             matrix[int(tag), idx] += 1  # Convert tag to int before indexing
-    users_display = [user_id[-3:] for user_id in users] #Shorten user name
+    users_display = [user_id[-2:] for user_id in users] #Shorten user name
     # Plot heatmap
     print(matrix)
     plt.figure(figsize=(10, 8))
     plt.imshow(matrix, cmap='hot', interpolation='nearest', aspect='auto')
-    plt.colorbar(label='Frequency')
-    plt.title('Tag Frequency Heatmap')
-    plt.xlabel('User')
-    plt.ylabel('Tag')
-    plt.xticks(range(len(users)), users_display, rotation=45)
-    plt.yticks(range(len(tags)), tags)
+    cbar = plt.colorbar()
+    cbar.set_label(label='Frequency', fontsize=BIGGER_SIZE)
+    cbar.ax.tick_params(labelsize=SMALL_SIZE)
+    plt.title('Tag Frequency Heatmap', fontsize=BIGGER_SIZE)
+    plt.xlabel('User', fontsize=MEDIUM_SIZE)
+    plt.ylabel('Tag', fontsize=MEDIUM_SIZE)
+    plt.xticks(range(len(users)), users_display, rotation=45, fontsize=SMALL_SIZE)
+    plt.yticks(range(len(tags)), tags, fontsize=SMALL_SIZE)
     plt.tight_layout()
     plt.savefig(DATA_DIR.replace('.json', '.png'))
     plt.show()
