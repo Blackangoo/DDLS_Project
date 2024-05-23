@@ -5,6 +5,7 @@ import os
 import matplotlib.pyplot as plt
 import json
 from matplotlib.ticker import StrMethodFormatter
+from IPython.display import display
 
 ###########################################################################################
 # CONSTANTS 
@@ -395,10 +396,8 @@ def plot_summary_one_figure_mnist_Compare(num_users, loc_ep1, Numb_Glob_Iters, l
     plt.figure(1, figsize=(5, 5))
     plt.title(folder_name, fontsize=font_size, loc='center')
     plt.grid(True)
-    #print('train loss: ', train_loss)
     # training loss
     for i in range(len(train_loss)):
-        #print(f"Algorithm {i}: {algorithms_list[i]}, Data length: {len(train_loss[i, 1:])}")
         label = get_label_name(algorithms_list[i])
         plt.plot(train_loss[i, 1:], linestyle=linestyles[i], label=label, linewidth = 1, color=colors[i],marker = markers[i],markevery=0.2, markersize=5)
     #plt.legend(loc='upper right', fontsize=legend_size)
@@ -417,11 +416,11 @@ def plot_summary_one_figure_mnist_Compare(num_users, loc_ep1, Numb_Glob_Iters, l
     plt.title(folder_name, fontsize=font_size, loc='center')
     plt.grid(True)
     # Global accurancy
+    final_accuracies = []  # List to store final accuracies for each algorithm
     for i in range(Numb_Algs):
-        #print(f"Algorithm {i}: {algorithms_list[i]}, Data length: {len(glob_acc[i, 1:])}")
         label = get_label_name(algorithms_list[i])
         plt.plot(glob_acc[i, 1:], linestyle=linestyles[i], label=label, linewidth = 1, color=colors[i],marker = markers[i],markevery=0.2, markersize=5)
-        print(label, glob_acc[i, -1])
+        final_accuracies.append({'Algorithm': label, 'Final Accuracy': glob_acc[i, -1], 'Folder Name': folder_name})
     plt.legend(loc='lower right', fontsize=font_size)
     plt.ylabel('Test Accuracy', fontsize=font_size)
     plt.xlabel('Global rounds', fontsize=font_size)
@@ -433,6 +432,9 @@ def plot_summary_one_figure_mnist_Compare(num_users, loc_ep1, Numb_Glob_Iters, l
     #plt.savefig(folder_path + "_test_"+ '_'.join(folder_path.split('/')[:-1]) + ".png", bbox_inches="tight")
     plt.show()
     plt.close()
+
+    df_final_accuracies = pd.DataFrame(final_accuracies)
+    display(df_final_accuracies)
 
 def plot_comparison(num_users, folders, y_lim=True):
     for folder in folders:
