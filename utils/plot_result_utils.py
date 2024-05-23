@@ -159,7 +159,6 @@ def max_average_df(num_users, folders):
             folder=folder
         )
         results_all.append(results_df)
-        #print(results_df)
 
     # Concatenate all DataFrames
     all_results_df = pd.concat(results_all, ignore_index=True)
@@ -172,22 +171,14 @@ def average_smooth(data, window_len=20, window='hanning'):
         return data
     for i in range(len(data)):
         x = data[i]
-        #print(f"Original data for index {i}: {x}, {len(x)}")
         s=np.r_[x[window_len-1:0:-1], x, x[-2:-window_len-1:-1]]
-        #print(f"Extended data for index {i}: {s}")
         if window == 'flat': #moving average
             w = np.ones(window_len, 'd')
         else:
             w = eval('np.'+ window + '(window_len)')
-        #print(f"Window for index {i}: {w}")
-
         if s.any():
             y=np.convolve(w/w.sum(), s, mode='valid')
-            #print(f"Smoothed data for index {i}: {y}")
-
             results.append(y[window_len-1:])
-            #print(f"Final smoothed data for index {i}: {y[window_len-1:]}")
-    #print(results)
     return np.array(results)
 
 ###########################################################################################
@@ -308,7 +299,6 @@ def max_df(num_users, folders):
                 personal_learning_rate=params[folder_name]["personal_learning_rate"][i]
             )
             results_all.append(results_df)
-            #print(results_all)
 
     # Concatenate all DataFrames
     all_results_df = pd.concat(results_all, ignore_index=True)
@@ -351,8 +341,6 @@ def heatmaps(data_dir):
     # Populate the matrix with tag frequencies
     for idx, user_id in enumerate(users):
         user_tags = train_data['user_data'][user_id]['y']
-        # print(user_id)
-        # print(user_tags)
         # print('------------------------------')
         for tag in user_tags:
             matrix[int(tag), idx] += 1  # Convert tag to int before indexing
@@ -396,10 +384,6 @@ def plot_summary_one_figure_mnist_Compare(num_users, loc_ep1, Numb_Glob_Iters, l
     glob_acc =  average_smooth(glob_acc_, window='flat')
     train_loss = average_smooth(train_loss_, window='flat')
     train_acc = average_smooth(train_acc_, window='flat')
-
-    #print(f"Shape of glob_acc_: {glob_acc.shape}")
-    #print(f"Shape of train_acc_: {train_acc.shape}")
-    #print(f"Shape of train_loss_: {train_loss.shape}")
     
     linestyles = ['-', '--', '-.','-', '--', '-.']
     linestyles = ['-','-','-','-','-','-','-']
@@ -453,7 +437,6 @@ def plot_summary_one_figure_mnist_Compare(num_users, loc_ep1, Numb_Glob_Iters, l
 def plot_comparison(num_users, folders, y_lim=True):
     for folder in folders:
         folder_name = folder.split("/")[-1]
-        #print(folder)
         plot_summary_one_figure_mnist_Compare(num_users=num_users,
                                             loc_ep1=params[folder_name]["local_epochs"],
                                             Numb_Glob_Iters=Numb_Glob_Iters,
