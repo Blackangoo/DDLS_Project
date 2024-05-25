@@ -46,7 +46,8 @@ users_labels = []
 # The users_labels list will contain all the assigned labels
 for user in trange(NUM_USERS):
     for j in range(NUM_LABELS):
-        l = (user * NUM_USERS + j) % 10
+        # l = (user * NUM_USERS + j) % 10
+        l = (user * NUM_LABELS + j) % 10
         users_labels.append(l)
 
 print(f"user_labels = {users_labels}")
@@ -95,12 +96,14 @@ idx = np.zeros(10, dtype=np.int64)
 count = 0
 for user in trange(NUM_USERS):
     for j in range(NUM_LABELS):  # 4 labels for each users
-        l = (user + j) % 10
+        # l = (user + j) % 10
+        l = (user + NUM_LABELS) % 10
         print("value of L",l)
         print("value of count",count)
         num_samples =  number_samples[count] # num sample
         count = count + 1
         if idx[l] + num_samples < len(mnist_data[l]):
+        #if idx[l] + num_samples <= len(mnist_data[l]):
             X[user] += mnist_data[l][idx[l]:idx[l]+num_samples].values.tolist()
             y[user] += (l*np.ones(num_samples)).tolist()
             idx[l] += num_samples
