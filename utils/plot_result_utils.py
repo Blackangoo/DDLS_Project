@@ -408,7 +408,7 @@ def plot_summary_one_figure_mnist_Compare(num_users, loc_ep1, Numb_Glob_Iters, l
         plt.gca().yaxis.set_major_formatter(StrMethodFormatter('{x:,.2f}')) # 2 decimal places
         plt.xticks(fontsize=font_size)
         plt.yticks(fontsize=font_size)
-        #plt.savefig(folder_path +  "_train_"+ '_'.join(folder_path.split('/')[:-1]) + ".png", bbox_inches="tight")
+        plt.savefig(folder_path +  "_train_"+ '_'.join(folder_path.split('/')[:-1]) + ".png", bbox_inches="tight")
         plt.show()
         plt.close()
 
@@ -429,7 +429,7 @@ def plot_summary_one_figure_mnist_Compare(num_users, loc_ep1, Numb_Glob_Iters, l
     plt.gca().yaxis.set_major_formatter(StrMethodFormatter('{x:,.2f}')) # 2 decimal places
     plt.xticks(fontsize=font_size)
     plt.yticks(fontsize=font_size)
-    #plt.savefig(folder_path + "_test_"+ '_'.join(folder_path.split('/')[:-1]) + ".png", bbox_inches="tight")
+    plt.savefig(folder_path + "_test_"+ '_'.join(folder_path.split('/')[:-1]) + ".png", bbox_inches="tight")
     plt.show()
     plt.close()
 
