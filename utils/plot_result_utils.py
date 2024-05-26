@@ -376,7 +376,7 @@ def get_label_name(name):
     if name.startswith("APFL"):
         return "APFL"
 
-def plot_summary_one_figure_mnist_Compare(num_users, loc_ep1, Numb_Glob_Iters, lamb, learning_rate, beta, algorithms_list, batch_size, dataset, k, personal_learning_rate, folder, y_lim):
+def plot_summary_one_figure_mnist_Compare(num_users, loc_ep1, Numb_Glob_Iters, lamb, learning_rate, beta, algorithms_list, batch_size, dataset, k, personal_learning_rate, folder, y_lim, attack):
     Numb_Algs = len(algorithms_list)   
     dataset = dataset
     folder_path = folder[2:]
@@ -392,25 +392,25 @@ def plot_summary_one_figure_mnist_Compare(num_users, loc_ep1, Numb_Glob_Iters, l
     colors = ['tab:blue', 'tab:green', 'r', 'darkorange', 'tab:brown', 'm']
 
     font_size = 14
-
-    plt.figure(1, figsize=(5, 5))
-    plt.title(folder_name, fontsize=font_size, loc='center')
-    plt.grid(True)
-    # training loss
-    for i in range(len(train_loss)):
-        label = get_label_name(algorithms_list[i])
-        plt.plot(train_loss[i, 1:], linestyle=linestyles[i], label=label, linewidth = 1, color=colors[i],marker = markers[i],markevery=0.2, markersize=5)
-    #plt.legend(loc='upper right', fontsize=legend_size)
-    plt.ylabel('Training Loss', fontsize=font_size)
-    plt.xlabel('Global rounds', fontsize=font_size)
-    if y_lim:
-        plt.ylim([0,  0.6])
-    plt.gca().yaxis.set_major_formatter(StrMethodFormatter('{x:,.2f}')) # 2 decimal places
-    plt.xticks(fontsize=font_size)
-    plt.yticks(fontsize=font_size)
-    #plt.savefig(folder_path +  "_train_"+ '_'.join(folder_path.split('/')[:-1]) + ".png", bbox_inches="tight")
-    plt.show()
-    plt.close()
+    if not attack:
+        plt.figure(1, figsize=(5, 5))
+        plt.title(folder_name, fontsize=font_size, loc='center')
+        plt.grid(True)
+        # training loss
+        for i in range(len(train_loss)):
+            label = get_label_name(algorithms_list[i])
+            plt.plot(train_loss[i, 1:], linestyle=linestyles[i], label=label, linewidth = 1, color=colors[i],marker = markers[i],markevery=0.2, markersize=5)
+        #plt.legend(loc='upper right', fontsize=legend_size)
+        plt.ylabel('Training Loss', fontsize=font_size)
+        plt.xlabel('Global rounds', fontsize=font_size)
+        if y_lim:
+            plt.ylim([0,  0.6])
+        plt.gca().yaxis.set_major_formatter(StrMethodFormatter('{x:,.2f}')) # 2 decimal places
+        plt.xticks(fontsize=font_size)
+        plt.yticks(fontsize=font_size)
+        #plt.savefig(folder_path +  "_train_"+ '_'.join(folder_path.split('/')[:-1]) + ".png", bbox_inches="tight")
+        plt.show()
+        plt.close()
 
     plt.figure(2, figsize=(5, 5))
     plt.title(folder_name, fontsize=font_size, loc='center')
@@ -436,7 +436,7 @@ def plot_summary_one_figure_mnist_Compare(num_users, loc_ep1, Numb_Glob_Iters, l
     df_final_accuracies = pd.DataFrame(final_accuracies)
     display(df_final_accuracies)
 
-def plot_comparison(num_users, folders, y_lim=True):
+def plot_comparison(num_users, folders, y_lim=True, attack=False):
     for folder in folders:
         folder_name = folder.split("/")[-1]
         plot_summary_one_figure_mnist_Compare(num_users=num_users,
@@ -451,4 +451,5 @@ def plot_comparison(num_users, folders, y_lim=True):
                                             folder=folder,
                                             k = params[folder_name]["K"],
                                             personal_learning_rate = params[folder_name]["personal_learning_rate"],
-                                            y_lim = y_lim)
+                                            y_lim = y_lim,
+                                            attack = attack)
